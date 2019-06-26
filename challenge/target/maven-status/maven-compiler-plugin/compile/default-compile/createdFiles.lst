@@ -1,0 +1,5 @@
+com\project\bemobi\challenge\model\URL.class
+com\project\bemobi\challenge\ChallengeApplication.class
+com\project\bemobi\challenge\service\URLService.class
+com\project\bemobi\challenge\controller\URLController.class
+com\project\bemobi\challenge\repository\URLRepository.class
