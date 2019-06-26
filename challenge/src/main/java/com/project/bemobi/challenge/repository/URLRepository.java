@@ -7,6 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface URLRepository extends JpaRepository<URL, Integer> {
 
-
     URL findByAlias(String alias);
 }

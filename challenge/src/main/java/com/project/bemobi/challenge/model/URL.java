@@ -10,8 +10,10 @@ public class URL {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID")
     private Integer id;
+
     @Column(name = "URL")
     private String url;
+
     @Column(name = "ALIAS")
     private String alias;
 

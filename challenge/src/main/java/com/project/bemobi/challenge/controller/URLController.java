@@ -21,8 +21,6 @@ public class URLController {
     @RequestMapping("/create")
     public Object create(@RequestParam("url") String url, @RequestParam(value = "alias", required = false) String alias) {
 
-        Integer id = Math.toIntExact(counter.incrementAndGet());
-
         if (alias == null) {
             return this.urlService.shortWithoutAlias(url);
 
