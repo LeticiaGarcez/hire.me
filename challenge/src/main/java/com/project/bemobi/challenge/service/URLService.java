@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Random;
+import java.util.List;
 
 @Component
 public class URLService {
@@ -32,6 +33,7 @@ public class URLService {
         return alias.reverse().toString();
     }
 
+
     public Object shortWithAlias(String url, String alias) {
 
         long ini = System.currentTimeMillis();
@@ -40,7 +42,7 @@ public class URLService {
 
         if (urlExists != null) {
 
-            Object[] result = {String.format("err_code: 001 - CUSTOM ALIAS ALREADY EXISTS")};
+            Object[] result = {String.format("ERR_CODE: 001 - CUSTOM ALIAS ALREADY EXISTS")};
             return result;
 
         } else {
@@ -57,21 +59,57 @@ public class URLService {
         }
     }
 
+
     public Object shortWithoutAlias(String url) {
 
         long ini = System.currentTimeMillis();
 
         String short_url = this.shortnerURL(url);
 
-        URL novaUrl = new URL();
-        novaUrl.setAlias(short_url);
-        novaUrl.setUrl(url);
+        URL newUrl = new URL();
+        newUrl.setAlias(short_url);
+        newUrl.setUrl(url);
 
         Object[] result = {String.format(FINAL_URL, short_url), " Original URL: " + url, " Time_taken: " + (System.currentTimeMillis() - ini + "ms")};
 
-        this.urlRepository.save(novaUrl);
+        this.urlRepository.save(newUrl);
 
         return result;
     }
 
+
+    public Object searchByAlias(String alias) {
+
+        long ini = System.currentTimeMillis();
+
+        URL aliasExists = this.urlRepository.findByAlias(alias);
+
+        if (aliasExists == null) {
+
+            Object[] result = {String.format("ERR_CODE: 002 - SHORTENED URL NOT FOUND")};
+            return result;
+
+        } else {
+
+            int view = aliasExists.getView() + 1;
+            aliasExists.setView(view);
+
+            this.urlRepository.save(aliasExists);
+            
+            Object[] result = {"URL shortened: " + aliasExists.getUrl(), " Time_taken: " + (System.currentTimeMillis() - ini + "ms")};
+
+            return result;
+        }
+    }
+
+
+    public List top10UrlAcessed() {
+
+        List<URL> topUrl = this.urlRepository.findTop10UrlByOrderByViewDesc();
+
+        return topUrl;
+
+    }
+
 }
+

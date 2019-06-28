@@ -8,15 +8,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 
-import java.util.concurrent.atomic.AtomicLong;
+import java.util.List;
 
 @RestController
 public class URLController {
 
     @Autowired
     private URLService urlService;
-
-    private final AtomicLong counter = new AtomicLong();
 
     @RequestMapping("/create")
     public Object create(@RequestParam("url") String url, @RequestParam(value = "alias", required = false) String alias) {
@@ -27,6 +25,20 @@ public class URLController {
         } else {
             return this.urlService.shortWithAlias(url, alias);
         }
+    }
+
+    @RequestMapping("/search")
+    public Object search(@RequestParam("alias") String alias) {
+
+        return this.urlService.searchByAlias(alias);
+
+    }
+
+    @RequestMapping("/topUrl")
+    public List topUrl() {
+
+        return this.urlService.top10UrlAcessed();
+
     }
 
 }

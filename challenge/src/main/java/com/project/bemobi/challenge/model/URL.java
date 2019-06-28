@@ -17,6 +17,9 @@ public class URL {
     @Column(name = "ALIAS")
     private String alias;
 
+    @Column(name = "VIEW")
+    private int view;
+
     public String getUrl() {
         return url;
     }
@@ -33,11 +36,11 @@ public class URL {
         this.alias = alias;
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getView() {
+        return view;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setView(Integer view) {
+        this.view = view;
     }
 }
